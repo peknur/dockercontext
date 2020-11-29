@@ -1,0 +1,16 @@
+# Python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.mypy_cache
+
+# Project
+*.py.bak
+/python_env/*
+!/python_env/.gitkeep
+.vscode
+
+.env.local
+.env
+activate
