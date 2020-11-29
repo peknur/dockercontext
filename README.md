@@ -11,3 +11,7 @@ with client.Context("nginx:alpine", {}) as ctx:
     self.assertEqual(64, len(ctx.container_id()))
 self.assertEqual(0, len(ctx.container_id()), ctx.container_id())
 ```
+Note that although context blocks until container's state is `running` this does not meant that service inside container is ready. 
+
+## Tests
+`$ python -m unittest`
