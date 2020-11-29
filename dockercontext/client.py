@@ -77,12 +77,16 @@ class Context:
         return ""
 
     def __enter__(self) -> 'Context':
-        " raises: ContextError "
+        """
+         This probably should not raise exception ..
+
+         raises: ContextError
+        """
         try:
             self.run()
-        except (errors.ContainerError, errors.ImageNotFound, errors.APIError):
+        except (errors.ContainerError, errors.ImageNotFound, errors.APIError) as e:
             self.close()
-            raise ContextError("Unable to start container")
+            raise ContextError("Unable to start container") from e
         return self
 
     def __exit__(self, *args) -> None:
