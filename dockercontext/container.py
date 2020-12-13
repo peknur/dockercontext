@@ -40,8 +40,9 @@ class Context:
             docker.errors.ContainerError – If the container exits with a non-zero exit code and detach is False.
             docker.errors.ImageNotFound – If the specified image does not exist.
             docker.errors.APIError – If the server returns an error.
+            RuntimeError - if 'run' returns unexpected type
         """
-        self.container = self.client.containers.run(
+        resp = self.client.containers.run(
             self.image,
             detach=True,
             remove=self.remove,
@@ -49,7 +50,9 @@ class Context:
             ports=self.ports,
             command=self.command
         )
-
+        if not isinstance(resp, containers.Container):
+            raise RuntimeError("docker run returned unexpected type: '{}'".format(type(resp)))
+        self.container = resp
         i = 1
         while i <= self.start_timeout:
             if self.container.status == self.STATE_RUNNING:
@@ -78,13 +81,11 @@ class Context:
 
     def __enter__(self) -> 'Context':
         """
-         This probably should not raise exception ..
-
          raises: ContextError
         """
         try:
             self.run()
-        except (errors.ContainerError, errors.ImageNotFound, errors.APIError) as e:
+        except (errors.ContainerError, errors.ImageNotFound, errors.APIError, RuntimeError) as e:
             self.close()
             raise ContextError("Unable to start container") from e
         return self
