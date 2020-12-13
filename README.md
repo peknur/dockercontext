@@ -21,7 +21,7 @@ class ContextTest(unittest.TestCase):
 
         self.assertEqual(0, len(ctx.container_id()), ctx.container_id())
 ```
-Note that although context blocks until container's state is `running` this does not meant that service inside container is ready. 
+Note that although context blocks until container's state is `running` this does not mean that service inside container is ready. 
 
 ## Tests
 `$ python -m unittest`
