@@ -10,6 +10,9 @@ __pycache__/
 /python_env/*
 !/python_env/.gitkeep
 .vscode
+build/
+dist/
+*.egg-info
 
 .env.local
 .env
