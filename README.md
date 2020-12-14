@@ -1,5 +1,9 @@
 # Docker Context
 Run containers using `with` statement. 
+## Install
+```
+$ pip install dockercontext
+```
 ## Example
 ```python
 import unittest
